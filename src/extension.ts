@@ -37,8 +37,10 @@ export function activate(context: vscode.ExtensionContext) {
 			const config = vscode.workspace.getConfiguration("manimvs");
 			let checkpoint_prefix = config.get<string>("checkpointCommentPrefix");
 
-			if (checkpoint_prefix != "") {
+			if (checkpoint_prefix) {
 				checkpoint_prefix = " " + checkpoint_prefix
+			} else {
+				checkpoint_prefix = "";
 			}
 
 			const lineAtCursor = editor.document.lineAt(startPosition).text;
