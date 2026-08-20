@@ -1,8 +1,8 @@
 {
-  "name": "manimvs-fork",
-  "displayName": "manimvs (Masa's fork)",
-  "description": "Helping to make manimgl easier to use. This fork also adds an option to only use comments as checkpoints if they have a prefix in the comment",
-  "version": "0.0.2",
+  "name": "manimvs",
+  "displayName": "manimvs",
+  "description": "Helping to make manimgl easier to use",
+  "version": "0.0.3",
   "publisher": "lolloz98",
   "engines": {
     "vscode": "^1.95.0"
