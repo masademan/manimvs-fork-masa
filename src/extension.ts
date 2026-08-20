@@ -34,6 +34,13 @@ export function activate(context: vscode.ExtensionContext) {
 			if (terminal === null) {}
 			const startPosition = editor.selection.active;
 
+			const config = vscode.workspace.getConfiguration("manimvs");
+			let checkpoint_prefix = config.get<string>("checkpointCommentPrefix");
+
+			if (checkpoint_prefix != "") {
+				checkpoint_prefix = " " + checkpoint_prefix
+			}
+
 			const lineAtCursor = editor.document.lineAt(startPosition).text;
 			if (!lineAtCursor.trim().startsWith("#")) {
 				copyToClipboard(lineAtCursor);
@@ -41,13 +48,15 @@ export function activate(context: vscode.ExtensionContext) {
 				return;
 			}
 
+			if (checkpoint_prefix != "" && lineAtCursor.trim().startsWith("#")) { return; }
+
 			let endChar = 0;
 			let end = startPosition.line;
 
 			for (let i = startPosition.line; i < editor.document.lineCount; i++) {
 				end = i;
 				let l = editor.document.lineAt(i).text;
-				if (i !== startPosition.line && l.trim().startsWith("#")) {
+				if (i !== startPosition.line && l.trim().startsWith("#" + checkpoint_prefix)) {
 					break;
 				}
 				if (i === editor.document.lineCount - 1) {
@@ -57,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			let sel = new vscode.Selection(new vscode.Position(startPosition.line, 0), new vscode.Position(end, endChar));
 			copyToClipboard(editor.document.getText(sel));
-			sendCheckpointPaste(lineAtCursor.substring(lineAtCursor.indexOf("#")));
+			sendCheckpointPaste(lineAtCursor.substring(lineAtCursor.indexOf("#" + checkpoint_prefix)));
 		} else if (editor) {
 			const selectedText = editor.document.getText(editor.selection);
 			if (selectedText.startsWith("#")) {
