@@ -2,7 +2,7 @@
   "name": "manimvs-fork",
   "displayName": "manimvs (Masa's fork)",
   "description": "Helping to make manimgl easier to use. This fork also adds an option to only use comments as checkpoints if they have a prefix in the comment",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "lolloz98",
   "engines": {
     "vscode": "^1.95.0"
@@ -30,8 +30,8 @@
           "type": "string",
           "default": "",
           "description": "If it's empty, all comments will be counted as checkpoints. But if there's a prefix added, then only comments in the form '# [PREFIX]' will be counted as a checkpoint"
-        },
-      },
+        }
+      }
     }
   },
   "scripts": {
