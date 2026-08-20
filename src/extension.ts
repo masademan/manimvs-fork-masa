@@ -37,8 +37,10 @@ export function activate(context: vscode.ExtensionContext) {
 			const config = vscode.workspace.getConfiguration("manimvs");
 			let checkpoint_prefix = config.get<string>("checkpointCommentPrefix");
 
-			if (checkpoint_prefix != "") {
+			if (checkpoint_prefix) {
 				checkpoint_prefix = " " + checkpoint_prefix
+			} else {
+				checkpoint_prefix = "";
 			}
 
 			const lineAtCursor = editor.document.lineAt(startPosition).text;
@@ -48,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
 				return;
 			}
 
-			if (checkpoint_prefix != "" && lineAtCursor.trim().startsWith("#")) { return; }
+			if (checkpoint_prefix != "" && lineAtCursor.trim().startsWith("#") && !lineAtCursor.trim().startsWith("#" + checkpoint_prefix)) { return; }
 
 			let endChar = 0;
 			let end = startPosition.line;
